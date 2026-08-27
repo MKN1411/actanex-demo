@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "actanex-demo-worker",
+  "name": "actanex-worker",
   "main": "src/index.ts",
   "compatibility_date": "2024-12-30",
   "compatibility_flags": ["nodejs_compat"],
@@ -8,24 +8,23 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "actanex-demo-db",
-      "database_id": "10266018-946e-441a-a9b2-9345b70c661d"
+      "database_name": "actanex-db",
+      "database_id": "2ef1a2a6-8856-425e-be56-58f701bf6f38"
     }
   ],
 
   "r2_buckets": [
     {
       "binding": "STORAGE",
-      "bucket_name": "actanex-demo-storage"
+      "bucket_name": "actanex-storage"
     }
   ],
 
   "vars": {
-    "APP_NAME": "ActaNex Demo Showcase",
+    "APP_NAME": "ActaNex (ACNX)",
     "APP_VERSION": "3.0.0",
-    "IS_DEMO_ENVIRONMENT": "true",
     "GITHUB_REPO_OWNER": "MKN1411",
-    "GITHUB_REPO_NAME": "actanex-demo"
+    "GITHUB_REPO_NAME": "ActaNex"
   },
 
   "ai": {
