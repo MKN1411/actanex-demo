@@ -471,7 +471,7 @@
             id: entry.id,
             projectId: entry.projectId,
             entryDate: entry.date,
-            actualHours: entry.durationHours,
+            actualHours: (entry.rawMinutes ? Number((entry.rawMinutes / 60).toFixed(2)) : entry.durationHours),
             billableHours: entry.durationHours,
             shortDescription: entry.taskDescription,
             taskDescription: entry.taskDescription,
