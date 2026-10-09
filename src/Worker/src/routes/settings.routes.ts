@@ -1,4 +1,5 @@
 import { Env } from "../types";
+import { BUILD_VERSION } from "../version";
 import { jsonResponse, errorResponse, isDemoRequest } from "../utils/http";
 import { logAuditEvent } from "../utils/audit";
 import { ensureSettings } from "../services/db_bootstrap.service";
@@ -40,7 +41,7 @@ export async function handleSettingsRoutes(
         commute_rate_tier2: 0.38,
         vma_rate_8h: 14.0,
         vma_rate_24h: 28.0,
-        pdf_storage_mode: "R2",
+        pdf_storage_mode: env.FILE_STORAGE_MODE || 'R2',
         email_sender_name: "Max Mustercontoso | Cloud & Security Architecture",
         email_sender_email: "max.mustercontoso@mail1.contoso.com",
         email_service: "resend",
@@ -76,6 +77,8 @@ export async function handleSettingsRoutes(
         datev_consultant_number: "1001",
         datev_client_number: "10001",
         lexware_webhook_callback_url: "",
+        stripe_portal_url: env.STRIPE_PORTAL_URL || "https://billing.stripe.com/p/login/00weVd8Aq187dAE4Eo5J600",
+        current_version: BUILD_VERSION,
       });
     }
 
@@ -142,6 +145,9 @@ export async function handleSettingsRoutes(
       resSettings.email_reminder2_body = defaultReminder2Body;
     }
     resSettings.has_env_lexware_key = !!(env.LEXWARE_API_KEY && env.LEXWARE_API_KEY.trim());
+    resSettings.pdf_storage_mode = env.FILE_STORAGE_MODE || 'R2';
+    resSettings.stripe_portal_url = env.STRIPE_PORTAL_URL || 'https://billing.stripe.com/p/login/00weVd8Aq187dAE4Eo5J600';
+    resSettings.current_version = BUILD_VERSION;
     return jsonResponse(resSettings);
   }
 
@@ -228,7 +234,7 @@ export async function handleSettingsRoutes(
         body.vma_rate_24h !== undefined
           ? parseFloat(body.vma_rate_24h)
           : (existing?.vma_rate_24h ?? 28.0),
-        body.pdf_storage_mode || existing?.pdf_storage_mode || "R2",
+        env.FILE_STORAGE_MODE || 'R2',
         body.email_sender_name ||
           existing?.email_sender_name ||
           "Max Mustermann | IT Consulting",
